@@ -1,0 +1,418 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  color: #222;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 60px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar h2 {
+  color: #2563eb;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #2563eb;
+}
+
+.nav-links span {
+  font-weight: 500;
+}
+
+/* Buttons */
+button {
+  border: none;
+  padding: 11px 20px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* Hero */
+.hero {
+  padding: 90px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #eaf2ff, #dbeafe);
+}
+
+.small-title {
+  color: #2563eb;
+  font-size: 14px !important;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 15px !important;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero h1 span {
+  color: #2563eb;
+}
+
+.description {
+  max-width: 650px;
+  margin: 0 auto 30px !important;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Add Trip Button */
+.start-btn {
+  padding: 14px 26px;
+  font-size: 16px;
+}
+
+/* Trips Section */
+.trips {
+  padding: 60px;
+}
+
+.trips h2 {
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 30px;
+}
+
+.trip-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* Trip Card */
+.trip-card {
+  width: 300px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+  transition: 0.25s;
+}
+
+.trip-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.trip-image {
+  height: 160px;
+  background: linear-gradient(135deg, #bfdbfe, #dbeafe);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 65px;
+}
+
+.trip-content {
+  padding: 20px;
+}
+
+.trip-card h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  text-transform: capitalize;
+}
+
+.trip-card p {
+  margin: 9px 0;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .navbar {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 60px 20px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .trips {
+    padding: 40px 20px;
+  }
+
+  .trip-card {
+    width: 100%;
+    max-width: 350px;
+  }
+}
+.trip-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-gallery {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.photo-gallery img {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+/* Trip Details Page */
+
+.trip-details-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: #f5f7fa;
+}
+
+.back-button {
+  margin-bottom: 25px;
+  background: white;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.back-button:hover {
+  background: #eff6ff;
+}
+
+.trip-details-card {
+  max-width: 850px;
+  margin: auto;
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.trip-details-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.trip-details-header h1 {
+  font-size: 42px;
+  margin-bottom: 12px;
+  text-transform: capitalize;
+}
+
+.trip-date {
+  color: #666;
+  font-size: 16px;
+}
+
+.trip-info {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.info-box {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.info-box span {
+  font-size: 30px;
+}
+
+.info-box small {
+  display: block;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.info-box strong {
+  font-size: 20px;
+}
+
+.story-section,
+.details-photos {
+  margin-top: 30px;
+}
+
+.story-section h2,
+.details-photos h2 {
+  margin-bottom: 15px;
+}
+
+.story-section p,
+.details-photos p {
+  color: #555;
+  line-height: 1.7;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+  .trip-details-card {
+    padding: 25px;
+  }
+
+  .trip-details-header h1 {
+    font-size: 32px;
+  }
+
+  .trip-info {
+    flex-direction: column;
+  }
+
+  .info-box {
+    max-width: none;
+  }
+}
+.details-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.details-photo-grid img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  .details-photo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.map-section {
+  padding: 40px 60px;
+  background: white;
+}
+
+.map-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.map-container {
+  max-width: 1000px;
+  margin: auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 700px) {
+  .map-section {
+    padding: 30px 20px;
+  }
+}
+.weather-section {
+  padding: 50px 20px;
+  background: #f5f7fa;
+}
+
+.weather-card {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.weather-card h2 {
+  margin-bottom: 25px;
+}
+
+.weather-search {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.weather-search input {
+  flex: 1;
+  max-width: 400px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.weather-result {
+  margin-top: 25px;
+  padding: 20px;
+  background: #eff6ff;
+  border-radius: 12px;
+}
+
+.weather-result p {
+  margin: 10px 0;
+  color: #555;
+}
+
+@media (max-width: 600px) {
+  .weather-search {
+    flex-direction: column;
+  }
+
+  .weather-search input {
+    max-width: none;
+  }
+}
