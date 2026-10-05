@@ -1,12 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
+import { API_URL } from "../config";
 
 function TripDetails() {
   const location = useLocation();
   const navigate = useNavigate();
 
   const trip = location.state?.trip;
-    const exportPDF = () => {
+
+  const exportPDF = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(20);
@@ -31,15 +33,16 @@ function TripDetails() {
 
     doc.save(`${trip.destination}-Travel-Journal.pdf`);
   };
+
   const getPhotoUrl = (photo) => {
-  if (!photo) return "";
+    if (!photo) return "";
 
-  if (photo.startsWith("http")) {
-    return photo;
-  }
+    if (photo.startsWith("http")) {
+      return photo;
+    }
 
-  return "http://localhost:5000" + photo;
-};
+    return API_URL + photo;
+  };
 
   if (!trip) {
     return (
@@ -66,12 +69,13 @@ function TripDetails() {
         ← Back to Home
       </button>
 
+      {/* Export PDF */}
       <button
-  className="back-button"
-  onClick={exportPDF}
->
-  📄 Export Trip as PDF
-</button>
+        className="back-button"
+        onClick={exportPDF}
+      >
+        📄 Export Trip as PDF
+      </button>
 
       <div className="trip-details-card">
 
@@ -110,33 +114,30 @@ function TripDetails() {
 
         {/* Story */}
         <div className="story-section">
-
           <h2>📝 My Travel Story</h2>
-
           <p>{trip.story}</p>
-
         </div>
 
         {/* Photos */}
-       <div className="details-photos">
+        <div className="details-photos">
 
-  <h2>📸 Travel Photos</h2>
+          <h2>📸 Travel Photos</h2>
 
-  {trip.photos && trip.photos.length > 0 ? (
-    <div className="details-photo-grid">
-      {trip.photos.map((photo, index) => (
-        <img
-          key={index}
-         src={getPhotoUrl(photo)}
-          alt={`Travel memory ${index + 1}`}
-        />
-      ))}
-    </div>
-  ) : (
-    <p>No photos added.</p>
-  )}
+          {trip.photos && trip.photos.length > 0 ? (
+            <div className="details-photo-grid">
+              {trip.photos.map((photo, index) => (
+                <img
+                  key={index}
+                  src={getPhotoUrl(photo)}
+                  alt={`Travel memory ${index + 1}`}
+                />
+              ))}
+            </div>
+          ) : (
+            <p>No photos added.</p>
+          )}
 
-</div>
+        </div>
 
       </div>
     </div>

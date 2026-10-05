@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Dashboard() {
       return;
     }
 
-    fetch("http://localhost:5000/api/trips/" + user.id)
+    fetch(API_URL + "/api/trips/" + user.id)
       .then((response) => response.json())
       .then((data) => {
         setTrips(data);

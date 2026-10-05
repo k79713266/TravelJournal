@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function AddTrip() {
   const navigate = useNavigate();
@@ -14,93 +15,94 @@ function AddTrip() {
   const [aiLoading, setAiLoading] = useState(false);
 
   const generateAIStory = async () => {
-  if (!destination || !startDate || !endDate || !story) {
-    alert("Please fill destination, dates and your memory first!");
-    return;
-  }
-
-  setAiLoading(true);
-
-  try {
-    const response = await fetch(
-      "http://localhost:5000/api/ai/generate-story",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          destination,
-          startDate,
-          endDate,
-          story,
-        }),
-      }
-    );
-
-    const data = await response.json();
-
-    if (response.ok) {
-      setStory(data.story);
-      alert("✨ AI Travel Story Generated!");
-    } else {
-      alert(data.message || "AI story generate nahi ho paayi.");
+    if (!destination || !startDate || !endDate || !story) {
+      alert("Please fill destination, dates and your memory first!");
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    alert("AI server se connection nahi ho pa raha.");
-  } finally {
-    setAiLoading(false);
-  }
-};
+
+    setAiLoading(true);
+
+    try {
+      const response = await fetch(
+        API_URL + "/api/ai/generate-story",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            destination,
+            startDate,
+            endDate,
+            story,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStory(data.story);
+        alert("✨ AI Travel Story Generated!");
+      } else {
+        alert(data.message || "AI story generate nahi ho paayi.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("AI server se connection nahi ho pa raha.");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  if (!user) {
-    alert("Please login first!");
-    navigate("/login");
-    return;
-  }
-
-  const formData = new FormData();
-
-  formData.append("userId", user.id);
-  formData.append("destination", destination);
-  formData.append("startDate", startDate);
-  formData.append("endDate", endDate);
-  formData.append("story", story);
-  formData.append("expense", expense);
-  formData.append("rating", rating);
-
-  photos.forEach((photo) => {
-    formData.append("photos", photo);
-  });
-
-  try {
-    const response = await fetch(
-      "http://localhost:5000/api/trips/add",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert("Trip and photos saved successfully! 🎉");
-      navigate("/");
-    } else {
-      alert(data.message || "Failed to save trip");
+    if (!user) {
+      alert("Please login first!");
+      navigate("/login");
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    alert("Server se connection nahi ho pa raha.");
-  }
-};
+
+    const formData = new FormData();
+
+    formData.append("userId", user.id);
+    formData.append("destination", destination);
+    formData.append("startDate", startDate);
+    formData.append("endDate", endDate);
+    formData.append("story", story);
+    formData.append("expense", expense);
+    formData.append("rating", rating);
+
+    photos.forEach((photo) => {
+      formData.append("photos", photo);
+    });
+
+    try {
+      const response = await fetch(
+        API_URL + "/api/trips",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Trip and photos saved successfully! 🎉");
+        navigate("/");
+      } else {
+        alert(data.message || "Failed to save trip");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server se connection nahi ho pa raha.");
+    }
+  };
+
   return (
     <div className="login-page">
       <div className="login-card">
@@ -139,20 +141,20 @@ function AddTrip() {
 
           <label>Travel Story</label>
           <textarea
-          
             placeholder="Write about your trip..."
             value={story}
             onChange={(e) => setStory(e.target.value)}
             rows="5"
             required
           />
+
           <button
-  type="button"
-  onClick={generateAIStory}
-  disabled={aiLoading}
->
-  {aiLoading ? "✨ Generating..." : "✨ Generate AI Story"}
-</button>
+            type="button"
+            onClick={generateAIStory}
+            disabled={aiLoading}
+          >
+            {aiLoading ? "✨ Generating..." : "✨ Generate AI Story"}
+          </button>
 
           <label>Expenses (₹)</label>
           <input
@@ -165,12 +167,12 @@ function AddTrip() {
 
           <label>Travel Photos</label>
 
-<input
-  type="file"
-  accept="image/*"
-  multiple
-  onChange={(e) => setPhotos(Array.from(e.target.files))}
-/>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => setPhotos(Array.from(e.target.files))}
+          />
 
           <label>Rating</label>
           <select

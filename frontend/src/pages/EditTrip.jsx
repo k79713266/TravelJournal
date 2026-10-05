@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function EditTrip() {
   const location = useLocation();
@@ -36,7 +37,7 @@ function EditTrip() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/trips/" + trip._id,
+        API_URL + "/api/trips/" + trip._id,
         {
           method: "PUT",
           headers: {

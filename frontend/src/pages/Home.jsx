@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MapView from "../components/MapView";
 import Weather from "../components/Weather";
+import { API_URL } from "../config";
 
 function Home() {
   const navigate = useNavigate();
@@ -10,28 +11,29 @@ function Home() {
   const [trips, setTrips] = useState([]);
 
   const [search, setSearch] = useState("");
-const [ratingFilter, setRatingFilter] = useState("");
-const filteredTrips = trips.filter((trip) => {
-  const matchesSearch = trip.destination
-    .toLowerCase()
-    .includes(search.toLowerCase());
+  const [ratingFilter, setRatingFilter] = useState("");
 
-  const matchesRating =
-    ratingFilter === "" ||
-    trip.rating >= Number(ratingFilter);
+  const filteredTrips = trips.filter((trip) => {
+    const matchesSearch = trip.destination
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
-  return matchesSearch && matchesRating;
-});
+    const matchesRating =
+      ratingFilter === "" ||
+      trip.rating >= Number(ratingFilter);
+
+    return matchesSearch && matchesRating;
+  });
 
   // Photo ka correct URL banane ke liye
- const getPhotoUrl = (photo) => {
-  return "http://localhost:5000" + photo;
-};
+  const getPhotoUrl = (photo) => {
+    return API_URL + photo;
+  };
 
   useEffect(() => {
     if (!user) return;
 
-    fetch("http://localhost:5000/api/trips/" + user.id)
+    fetch(API_URL + "/api/trips/" + user.id)
       .then((response) => response.json())
       .then((data) => {
         console.log("Trips from MongoDB:", data);
@@ -95,59 +97,63 @@ const filteredTrips = trips.filter((trip) => {
           </Link>
         </div>
       </section>
- 
- <section className="map-section">
-  <h2>🗺️ Explore Your Travel Map</h2>
-  <MapView trips={trips} />
-</section>
-<section className="weather-section">
-  <Weather />
-</section>
+
+      {/* Map */}
+      <section className="map-section">
+        <h2>🗺️ Explore Your Travel Map</h2>
+        <MapView trips={trips} />
+      </section>
+
+      {/* Weather */}
+      <section className="weather-section">
+        <Weather />
+      </section>
 
       {/* Trips */}
       <section className="trips">
         <h2>Explore Your Journeys</h2>
+
         <div className="search-filter">
 
-  <input
-    type="text"
-    placeholder="🔎 Search destination..."
-    value={search}
-    onChange={(e) => setSearch(e.target.value)}
-  />
+          <input
+            type="text"
+            placeholder="🔎 Search destination..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-  <select
-    value={ratingFilter}
-    onChange={(e) => setRatingFilter(e.target.value)}
-  >
-    <option value="">All Ratings</option>
-    <option value="5">⭐⭐⭐⭐⭐ 5</option>
-    <option value="4">⭐⭐⭐⭐ 4+</option>
-    <option value="3">⭐⭐⭐ 3+</option>
-    <option value="2">⭐⭐ 2+</option>
-    <option value="1">⭐ 1+</option>
-  </select>
+          <select
+            value={ratingFilter}
+            onChange={(e) => setRatingFilter(e.target.value)}
+          >
+            <option value="">All Ratings</option>
+            <option value="5">⭐⭐⭐⭐⭐ 5</option>
+            <option value="4">⭐⭐⭐⭐ 4+</option>
+            <option value="3">⭐⭐⭐ 3+</option>
+            <option value="2">⭐⭐ 2+</option>
+            <option value="1">⭐ 1+</option>
+          </select>
 
-</div>
+        </div>
 
         <div className="trip-container">
 
           {trips.length === 0 ? (
-  <p>No trips added yet.</p>
-) : filteredTrips.length === 0 ? (
-  <p>No trips found. 🔎</p>
-) : (
-  filteredTrips.map((trip) => (
+            <p>No trips added yet.</p>
+          ) : filteredTrips.length === 0 ? (
+            <p>No trips found. 🔎</p>
+          ) : (
+            filteredTrips.map((trip) => (
 
               <div
-  className="trip-card"
-  key={trip._id}
-  onClick={() => {
-    navigate("/trip-details", {
-      state: { trip },
-    });
-  }}
->
+                className="trip-card"
+                key={trip._id}
+                onClick={() => {
+                  navigate("/trip-details", {
+                    state: { trip },
+                  });
+                }}
+              >
 
                 {/* Cover Photo */}
                 <div className="trip-image">
@@ -198,24 +204,25 @@ const filteredTrips = trips.filter((trip) => {
 
                   {/* Edit */}
                   <button
-  onClick={(e) => {
-    e.stopPropagation();
+                    onClick={(e) => {
+                      e.stopPropagation();
 
-    navigate("/edit-trip", {
-      state: { trip },
-    });
-  }}
->
+                      navigate("/edit-trip", {
+                        state: { trip },
+                      });
+                    }}
+                  >
                     ✏️ Edit
                   </button>
 
                   {/* Delete */}
                   <button
                     onClick={async (e) => {
-  e.stopPropagation();
+                      e.stopPropagation();
+
                       try {
                         const response = await fetch(
-                          "http://localhost:5000/api/trips/" + trip._id,
+                          API_URL + "/api/trips/" + trip._id,
                           {
                             method: "DELETE",
                           }
